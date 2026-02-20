@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Crm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Country="US" Name="FieldRoutesCRMfor3CX" Version="6" SupportsEmojis="false">
+  <Number Prefix="Off" MaxLength="[MaxLength]" />
+  <Connection MaxConcurrentRequests="16" />
+  <Parameters>
+    <Parameter Parent="General Configuration" Name="OfficeID"    Type="String"   Title="Office ID:" />
+    <Parameter Parent="General Configuration" Name="AuthKey"     Type="Password" Title="Authentication Key:" />
+    <Parameter Parent="General Configuration" Name="AuthToken"   Type="Password" Title="Authentication Token:" />
+    <Parameter Parent="General Configuration" Name="CompanyName" Type="String"   Title="Company Name (subdomain):" />
+  </Parameters>
+  <Authentication Type="No" />
+  <Scenarios>
+    <Scenario Id="" Type="REST">
+      <Request Url="https://[CompanyName].fieldroutes.com/api/customer/search?officeID=[OfficeID]&amp;authenticationKey=[AuthKey]&amp;authenticationToken=[AuthToken]&amp;phone=[Number]&amp;includeData=1" RequestType="Get" ResponseType="Json" />
+      <Rules>
+        <Rule Type="Any">customers</Rule>
+      </Rules>
+      <Variables>
+        <Variable Name="CustomerID"       Path="customers.customerID" />
+        <Variable Name="FirstName"        Path="customers.fname" />
+        <Variable Name="LastName"         Path="customers.lname" />
+        <Variable Name="CompanyNameField" Path="customers.companyName" />
+        <Variable Name="Email"            Path="customers.email" />
+        <Variable Name="Phone1"           Path="customers.phone1" />
+        <Variable Name="Phone2"           Path="customers.phone2" />
+      </Variables>
+      <Outputs AllowEmpty="false">
+        <Output Type="ContactUrl"    Value="https://[CompanyName].fieldroutes.com/customer/[CustomerID]" />
+        <Output Type="FirstName"     Value="[FirstName]" />
+        <Output Type="LastName"      Value="[LastName]" />
+        <Output Type="CompanyName"   Value="[CompanyNameField]" />
+        <Output Type="Email"         Value="[Email]" />
+        <Output Type="PhoneBusiness" Value="[Phone1]" />
+        <Output Type="PhoneHome"     Value="[Phone2]" />
+        <Output Type="EntityId"      Value="[CustomerID]" />
+        <Output Type="EntityType"    Value="Customer" />
+      </Outputs>
+    </Scenario>
+    <Scenario Id="ReportCall" Type="REST">
+      <Request SkipIf="[EntityId]==&quot;&quot;" Url="https://[CompanyName].fieldroutes.com/api/note/create" RequestEncoding="UrlEncoded" RequestType="Post" ResponseType="Json">
+        <PostValues>
+          <Value Key="officeID">[OfficeID]</Value>
+          <Value Key="authenticationKey">[AuthKey]</Value>
+          <Value Key="authenticationToken">[AuthToken]</Value>
+          <Value Key="customerID">[EntityId]</Value>
+          <Value Key="notes">3CX Call Log | Type: [CallType] | Number: [Number] | Agent: [AgentFirstName] [AgentLastName] | Duration: [Duration] | Date: [DateTime]</Value>
+        </PostValues>
+      </Request>
+    </Scenario>
+    <Scenario Id="CreateContactRecordFromClient" Type="REST">
+      <Request Url="https://[CompanyName].fieldroutes.com/api/customer/search?officeID=[OfficeID]&amp;authenticationKey=[AuthKey]&amp;authenticationToken=[AuthToken]&amp;phone=[Number]&amp;includeData=1" RequestType="Get" ResponseType="Json" />
+      <Rules>
+        <Rule Type="Any">customers</Rule>
+      </Rules>
+      <Variables>
+        <Variable Name="CustomerID"       Path="customers.customerID" />
+        <Variable Name="FirstName"        Path="customers.fname" />
+        <Variable Name="LastName"         Path="customers.lname" />
+        <Variable Name="CompanyNameField" Path="customers.companyName" />
+        <Variable Name="Email"            Path="customers.email" />
+        <Variable Name="Phone1"           Path="customers.phone1" />
+        <Variable Name="Phone2"           Path="customers.phone2" />
+      </Variables>
+      <Outputs AllowEmpty="false">
+        <Output Type="ContactUrl"    Value="https://[CompanyName].fieldroutes.com/customer/[CustomerID]" />
+        <Output Type="FirstName"     Value="[FirstName]" />
+        <Output Type="LastName"      Value="[LastName]" />
+        <Output Type="CompanyName"   Value="[CompanyNameField]" />
+        <Output Type="Email"         Value="[Email]" />
+        <Output Type="PhoneBusiness" Value="[Phone1]" />
+        <Output Type="PhoneHome"     Value="[Phone2]" />
+        <Output Type="EntityId"      Value="[CustomerID]" />
+        <Output Type="EntityType"    Value="Customer" />
+      </Outputs>
+    </Scenario>
+  </Scenarios>
+</Crm>
