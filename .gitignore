@@ -1,0 +1,8 @@
+# .gitignore for FieldRoutesCRMfor3CX
+# Ignore all files that start with 'hide' (case-insensitive)
+[hH][iI][dD][eE]*
+
+# Other typical ignores (optional, can be expanded as needed)
+*.log
+*.tmp
+*.bak
