@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "PestRoutes Helper",
+  "version": "2.0.0",
+  "description": "Automatically opens PestRoutes customer records when a call is answered in 3CX. Uses SSE for lightweight persistent connection.",
+
+  "permissions": [
+    "tabs",
+    "scripting",
+    "storage",
+    "alarms"
+  ],
+
+  "host_permissions": [
+    "https://*.pestroutes.com/*",
+    "http://*.fieldroutes.com/*",
+    "http://*.3cx.us.com/*",
+    "http://localhost:*/*",
+    "http://192.168.*.*:*/*",
+    "http://10.*.*.*:*/*",
+    "http://172.16.*.*:*/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16":  "icons/icon16.png",
+      "48":  "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://*.pestroutes.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
