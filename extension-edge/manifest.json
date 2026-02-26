@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "FieldRoutes CRM for 3CX",
+  "version": "2.1.0",
+  "description": "Automatically opens FieldRoutes customer records when a call is answered in 3CX.",
+  "permissions": [
+    "tabs",
+    "scripting",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://*.pestroutes.com/*",
+    "http://localhost:*/*",
+    "https://localhost:*/*",
+    "http://192.168.*.*:*/*",
+    "https://192.168.*.*:*/*",
+    "http://10.*.*.*:*/*",
+    "https://10.*.*.*:*/*",
+    "http://172.16.*.*:*/*",
+    "https://172.16.*.*:*/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.pestroutes.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

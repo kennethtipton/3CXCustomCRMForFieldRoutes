@@ -1,12 +1,12 @@
 // ============================================================
-// PestRoutes Helper — Content Script
+// FieldRoutes CRM for 3CX — Content Script
 // ============================================================
 // Runs on every PestRoutes page. Listens for messages from
 // the background service worker and can interact with the
 // live page DOM directly.
 // ============================================================
 
-console.log('[PestRoutes Helper] Content script active on', window.location.hostname);
+console.log('[FieldRoutes CRM for 3CX] Content script active on', window.location.hostname);
 
 // Listen for messages from the background worker
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
@@ -19,12 +19,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 function triggerCustomerSearch(customerID, phone) {
     const searchInput = document.getElementById('customerSearch');
     if (!searchInput) {
-        console.warn('[PestRoutes Helper] customerSearch not found');
+        console.warn('[FieldRoutes CRM for 3CX] customerSearch not found');
         return;
     }
 
     const searchTerm = phone || customerID;
-    console.log(`[PestRoutes Helper] Content script triggering search for: ${searchTerm}`);
+    console.log(`[FieldRoutes CRM for 3CX] Content script triggering search for: ${searchTerm}`);
 
     searchInput.focus();
     searchInput.value = searchTerm;

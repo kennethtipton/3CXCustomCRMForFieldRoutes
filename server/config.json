@@ -1,0 +1,24 @@
+{
+  "Port":             3000,
+  "BindAddress":      "*",
+  "Fqdn":             "YOUR_SERVER_IP",
+  "UseHttps":         false,
+  "CertPath":         "",
+  "CertPassword":     "poshacme",
+  "Secret":           "CHANGE_ME_TO_A_RANDOM_SECRET_STRING",
+  "LogRetainDays":    30,
+
+  "AcmeContact":      "",
+  "AcmeDomain":       "",
+  "AcmePlugin":       "HurricaneElectric",
+  "AcmeHEUser":       "",
+  "AcmeHEPass":       "",
+  "AcmeHEDynRecords": [],
+  "AcmeUseStaging":   false,
+
+  "DeployType":       "PodePfx",
+  "IISSiteName":      "Default Web Site",
+  "IISPort":          443,
+  "IISIPAddress":     "*"
+}
+
